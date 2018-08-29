@@ -9,11 +9,7 @@ mongoose_os_version: ${mos.version}
 
 config_schema:
   - ["rainprompt", "o", {title: "RainPrompt ESP32 Plant Sensor AWS-IoT App Settings"}]
-  - ["rainprompt.deviceId", "s", "", {title: "DeviceId"}]
-  - ["wifi.sta.enable", false]
-  - ["wifi.sta.ssid", ""]
-  - ["wifi.sta.pass", ""]
-  - ["wifi.ap.enable", false]
+  - ["rainprompt.reportInterval", "i", "300000", {title: "ReportInterval"}]
   - ["http.enable", false]
   - ["device.id", "rainprompt_??????"]
   - ["shadow.lib", "s", "aws", {title: "Preferred shadow lib, e.g. aws, dash, gcp"}]

@@ -33,11 +33,6 @@ let dht = DHT.create(dhtPin, DHT.DHT11);
 
 // Set deviceID
 let deviceId = Cfg.get("device.id");
-if (deviceId === "")
-{
-  deviceId = Cfg.get("rainprompt.deviceId");
-  Cfg.set("device.id", deviceId);
-}
 
 // Init state
 let state = {
@@ -56,6 +51,8 @@ let getStatus = function() {
   };
 };
 
-Timer.set(5000, Timer.REPEAT, function() {
+let reportInterval = Cfg.get("rainprompt.reportInterval");
+
+Timer.set(reportInterval, Timer.REPEAT, function() {
   Shadow.update(0, state);
 }, null);
