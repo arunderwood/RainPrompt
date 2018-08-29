@@ -8,7 +8,7 @@ load('api_esp32.js');
 load('api_dht.js');
 load('api_adc.js');
 load('api_rpc.js');
-load('api_aws.js');
+load('api_shadow.js');
 
 // Pins
 let ResetPin = 0;
@@ -56,37 +56,6 @@ let getStatus = function() {
   };
 };
 
-function reportState() {
-  print('Reporting state:', JSON.stringify(state));
-  AWS.Shadow.update(0, state);
-}
-
-//Timer.set(freq, Timer.REPEAT, function() {
-
-//  state = getStatus();
-//  reportState();
-
-//}, null);
-
-AWS.Shadow.setStateHandler(function(ud, event, reported, desired) {
-  print('Event:', event, '('+AWS.Shadow.eventName(event)+')');
-
-  // Report state when device connects to AWS
-  if (event === AWS.Shadow.CONNECTED) {
-    reportState();
-    return;
-  }
-  
-    // Go to sleep after AWS acknowledges an update
-  if (event === AWS.Shadow.UPDATE_ACCEPTED) {
-    print('Caught event:', event, '('+AWS.Shadow.eventName(event)+')');
-    ESP32.deepSleep(freq);
-    return;
-  }
-
-  // mOS will request state on reconnect and deltas will arrive on changes.
-  if (event !== AWS.Shadow.GET_ACCEPTED && event !== AWS.Shadow.UPDATE_DELTA) {
-    return;
-  }
-
+Timer.set(5000, Timer.REPEAT, function() {
+  Shadow.update(0, state);
 }, null);
