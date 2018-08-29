@@ -16,6 +16,7 @@ config_schema:
   - ["wifi.ap.enable", false]
   - ["http.enable", false]
   - ["device.id", "rainprompt_??????"]
+  - ["shadow.lib", "s", "aws", {title: "Preferred shadow lib, e.g. aws, dash, gcp"}]
 
 filesystem:
   - fs
@@ -30,6 +31,8 @@ libs:
   - origin: https://github.com/mongoose-os-libs/mjs
   - origin: https://github.com/mongoose-os-libs/adc
   - origin: https://github.com/mongoose-os-libs/shadow
+  - origin: https://github.com/mongoose-os-libs/aws
+  - origin: https://github.com/mongoose-os-libs/mqtt
 
 tags:
   - js
