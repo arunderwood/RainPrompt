@@ -10,6 +10,12 @@ mongoose_os_version: ${mos.version}
 config_schema:
   - ["rainprompt", "o", {title: "RainPrompt ESP32 Plant Sensor AWS-IoT App Settings"}]
   - ["rainprompt.reportInterval", "i", 300000, {title: "ReportInterval"}]
+  - ["rainprompt.pins", "o", {title: "Pin mappings for peripheral devices"}]
+  - ["rainprompt.pins.reset", "i", 0, {title: "ESP32 Reset Pin"}]
+  - ["rainprompt.pins.led", "i", 16, {title: "ESP32 LED Pin"}]
+  - ["rainprompt.pins.dht", "i", 22, {title: "DHT11 Air Temp Sensor"}]
+  - ["rainprompt.pins.moisture", "i", 32, {title: "Capacitive Soil Moisture sensor"}]
+  - ["rainprompt.pins.light", "i", 34, {title: "Photo-resistive light level sensor"}]
   - ["http.enable", false]
   - ["device.id", "rainprompt_??????"]
   - ["shadow.lib", "s", "aws", {title: "Preferred shadow lib, e.g. aws, dash, gcp"}]

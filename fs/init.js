@@ -11,48 +11,34 @@ load('api_rpc.js');
 load('api_shadow.js');
 
 // Pins
-let ResetPin = 0;
-let LedPin = 16;
-let dhtPin = 22;
-let moisturePin = 32;
-let LightPin = 34;
-
-// How often should we update the cloud
-let freq = 60000;
+let resetPin = Cfg.get('rainprompt.pins.reset');
+let ledPin = Cfg.get('rainprompt.pins.led');
+let dhtPin = Cfg.get('rainprompt.pins.dht');
+let moisturePin = Cfg.get('rainprompt.pins.moisture');
+let lightPin = Cfg.get('rainprompt.pins.light');
 
 // Turn on status led
-GPIO.set_mode(LedPin, GPIO.MODE_OUTPUT);
-GPIO.write(LedPin, 0);
+GPIO.set_mode(ledPin, GPIO.MODE_OUTPUT);
+GPIO.write(ledPin, 0);
 
-print("Starting...");
+print('Starting...');
 
 // Init sensors
 ADC.enable(moisturePin);
-ADC.enable(LightPin);
+ADC.enable(lightPin);
 let dht = DHT.create(dhtPin, DHT.DHT11);
-
-// Set deviceID
-let deviceId = Cfg.get("device.id");
-
-// Init state
-let state = {
-  'Temperature': dht.getTemp(),
-  'Humidity': dht.getHumidity(),
-  'Moisture': ADC.read(moisturePin),
-  'Light': ADC.read(LightPin)
-};
 
 let getStatus = function() {
   return {
-    'Temperature': dht.getTemp(),
-    'Humidity': dht.getHumidity(),
-    'Moisture': ADC.read(moisturePin),
-    'Light': ADC.read(LightPin)
+    'temperature': dht.getTemp(),
+    'humidity': dht.getHumidity(),
+    'moisture': ADC.read(moisturePin),
+    'light': ADC.read(lightPin)
   };
 };
 
-let reportInterval = Cfg.get("rainprompt.reportInterval");
+let reportInterval = Cfg.get('rainprompt.reportInterval');
 
 Timer.set(reportInterval, Timer.REPEAT, function() {
-  Shadow.update(0, state);
+  Shadow.update(0, getStatus);
 }, null);

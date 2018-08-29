@@ -1,0 +1,26 @@
+env:
+  browser: false
+  es6: true
+extends: 'eslint:recommended'
+globals:
+  load: true
+  Cfg: true
+  ADC: true
+  DHT: true
+  Timer: true
+  Shadow: true
+  GPIO: true
+  print: true
+rules:
+  indent:
+    - error
+    - 2
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always
